@@ -14,8 +14,6 @@ router.route('/').get((req,res) => {     // This is a get request that allows to
 
 router.route('/add').post(async(req,res)=>  {          // same thing as the other request we're just mentionin  the route 'add'
 
-    console.log("req",req.body)
-
     const newUser = new User(_.pick(req.body,['fullName','email','password','phoneNumber','isAdmin']))         // creating an instance of User with the username variable
 
     const salt = await bcrypt.genSalt(10)
