@@ -41,7 +41,7 @@ router.put('/:id',[auth,admin],(req,res)=> {    // we specified the update/:id  
     User.findById(req.params.id)            
         .then(user => {
             user.fullName = req.body.fullName || user.fullName      //we're updating the content of the user
-            user.phoneNumber = req.body.phoneNumber || user.phoneNumber 
+            user.phoneNumber = req.body.phoneNumber || user.phoneNumber //attribute will take new value if it exists if not keeps it's value
 
             user.save()                             // then commiting changes with user.save()
                 .then(()=> res.json(_.pick(user,["_id","email",'fullName','isAdmin','phoneNumber'])))
