@@ -17,13 +17,10 @@ if (!config.get('jwtPrivateKey')){
 }
 
 try{
-    mongoose.connect('mongodb://localhost:27017/eventHub',{ useUnifiedTopology: true , useNewUrlParser: true , useCreateIndex : true}, function (err, db) {
-      if (err) throw err
-      else console.log("connected")
-
-    })
+    mongoose.connect('mongodb+srv://hedi:azerty123@cluster0.9u98x.mongodb.net/nadhir',{ useNewUrlParser : true, useUnifiedTopology : true, useCreateIndex: true})
+    console.log("connected")
   }catch(err){
-    console.log(err);
+    console.error(err);
     process.exit(1);
   }
 

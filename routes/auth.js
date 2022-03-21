@@ -15,8 +15,9 @@ router.route('/').post(async(req,res) => {     // This is a get request that all
     if(!validPassword) return res.status(400).send('Invalid email or password')
 
     const token = jwt.sign({ _id : user._id,isAdmin : user.isAdmin},config.get('jwtPrivateKey'))
+    const userReponse = _.pick(user, ['_id','fullName','email','phoneNumber','isAdmin'])
 
-    res.send(token)
+    res.send({...userReponse ,token})
 })
 
 // router.route('/add').post(async(req,res)=>  {          // same thing as the other request we're just mentionin  the route 'add'

@@ -13,8 +13,8 @@ router.route('/').get((req,res) => {     // This is a get request that allows to
 })
 
 router.route('/add').post(async(req,res)=>  {          // same thing as the other request we're just mentionin  the route 'add'
-    
 
+    console.log("req",req.body)
 
     const newUser = new User(_.pick(req.body,['fullName','email','password','phoneNumber','isAdmin']))         // creating an instance of User with the username variable
 
@@ -39,13 +39,14 @@ router.delete('/:id', [auth,admin], (req,res) => {     // we're using the delete
         .catch(err => res.status(400).json("Error : "+err))
 })
 
-router.route('/update/:id').post((req,res)=> {    // we specified the update/:id  route and used a post request
+router.put('/:id',[auth,admin],(req,res)=> {    // we specified the update/:id  route and used a post request
     User.findById(req.params.id)            
         .then(user => {
-            user.username = req.body.username       //we're updating the content of the user
+            user.fullName = req.body.fullName || user.fullName      //we're updating the content of the user
+            user.phoneNumber = req.body.phoneNumber || user.phoneNumber 
 
             user.save()                             // then commiting changes with user.save()
-                .then(()=> res.json('User Updated'))
+                .then(()=> res.json(_.pick(user,["_id","email",'fullName','isAdmin','phoneNumber'])))
                 .catch(err => res.status(400).json("Error : "+err))
         })
         .catch(err => res.status(400).json('Error : ' +err))
