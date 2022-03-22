@@ -8,6 +8,8 @@ let User = require('../models/user.model') // importing the User model from user
 
 router.route('/').post(async(req,res) => {     // This is a get request that allows to have all the users 
     
+    console.log("data",req.body)
+
     let user = await User.findOne({email : req.body.email})
     if(!user) return res.status(400).send('Invalid email or password')
 
